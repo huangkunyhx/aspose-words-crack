@@ -1,0 +1,91 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
+}
+
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+defaultTasks 'clean', 'build'
+
+layout.buildDirectory = "target"
+
+repositories {
+  mavenLocal()
+  maven {
+    allowInsecureProtocol true
+    url 'http://nexus.zens.work/repository/maven-public'
+  }
+  mavenCentral()
+}
+
+test {
+  useJUnitPlatform()
+}
+
+java {
+//  withJavadocJar()
+  withSourcesJar()
+}
+
+compileJava {
+  options.compilerArgs = ["-parameters"]
+}
+
+jar {
+  enabled true
+  manifest.attributes['Manifest-Version'] = '1.0'
+  manifest.attributes['Automatic-Module-Name'] = project.group
+  manifest.attributes['Created-By'] = 'Gradle 8'
+  manifest.attributes['Build-Jdk-Spec'] = '17'
+  manifest.attributes['Implementation-Title'] = project.description
+  manifest.attributes['Implementation-Version'] = project.version
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      artifactId project.name
+      from components.java
+
+      pom {
+        description = project.description
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+        developers {
+          developer {
+            id = 'kevin'
+            name = 'Kevin Huang'
+            email = 'huangkunyhx@hotmail.com'
+          }
+        }
+      }
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    maven {
+      allowInsecureProtocol true
+      //指定要上传的maven私服仓库
+      url = 'http://nexus.zens.work/repository/' + (version.endsWith('SNAPSHOT') ? 'maven-snapshots' : 'maven-releases')
+      //认证用户和密码
+      credentials {
+        username 'devops'
+        password 'zenstec@nexus!'
+      }
+    }
+  }
+}
+
+javadoc {
+  if(JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
+}

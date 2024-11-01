@@ -1,0 +1,18 @@
+apply plugin: 'idea'
+apply plugin: 'java-library'
+
+group = 'com.zenstec.china.trip'
+version = '0.0.1'
+description = '本项目从国外平台同步数据'
+defaultTasks "clean"
+
+dependencies {
+  compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
+
+  implementation group: 'org.javassist', name: 'javassist', version: '3.30.2-GA'
+  implementation group: 'com.aspose', name: 'aspose-words', version: '24.9', classifier: 'jdk17'
+  implementation group: 'com.aspose', name: 'aspose-ocr', version: '24.8.0'
+
+  annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
+}
+apply from: "$rootDir/gradle/tasks.gradle"
