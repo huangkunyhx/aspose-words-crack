@@ -22,7 +22,7 @@ public class AsposePdf {
     private static final String crackedJar = "aspose-pdf-24.10-jdk17-cracked.jar";
 
     public static void main(String[] args) throws Exception {
-        Files.deleteFile(path, Set.of(jar + ".bak", crackedJar));
+        Files.deleteFile(path, Set.of(jar + ".bak"));
         FileUtils.copyFile(new File(path + jar + ".bak"), new File(path + jar));
 
         ClassPool.getDefault().insertClassPath(path + jar); //注意路径
@@ -36,5 +36,6 @@ public class AsposePdf {
                 "META-INF/7DD91000.SF",
                 "META-INF/7DD91000.RSA"
         ));
+        Files.deleteFile(path, Set.of(jar + ".bak", crackedJar));
     }
 }
