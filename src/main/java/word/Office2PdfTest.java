@@ -7,7 +7,7 @@ import java.io.*;
 
 public class Office2PdfTest {
     public static void main(String[] args) throws Exception {
-        String path = "./file/";
+        String path = "./file/word/";
         if (null != args && args.length >= 1 && !args[0].trim().isEmpty()) {
             path = args[0].trim();
         }

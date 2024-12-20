@@ -2,12 +2,22 @@ package word.v24_6;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import org.apache.commons.io.FileUtils;
+import util.Files;
+
+import java.io.File;
+import java.util.Set;
 
 public class AsposeWords {
-    private static final String path = "./word/v24_6/";
+    private static final String path = "./file/word/v24_6/";
+    private static final String jar = "aspose-words-24.6-jdk17.jar";
+    private static final String crackedJar = "aspose-words-24.6-jdk17-cracked.jar";
 
     public static void main(String[] args) throws Exception {
-        ClassPool.getDefault().insertClassPath(path + "aspose-words-24.6-jdk17.jar"); //注意路径
+        Files.deleteFile(path, Set.of(jar + ".bak"));
+        FileUtils.copyFile(new File(path + jar + ".bak"), new File(path + jar));
+
+        ClassPool.getDefault().insertClassPath(path + jar);
         // 类文件1，从com.aspose.words.License类文件找到。
         CtClass clazz = ClassPool.getDefault().getCtClass("com.aspose.words.zzWst");
         clazz.getDeclaredMethod("zzXj5").setBody("{return com.aspose.words.zzVSw.zzYzu;}");
@@ -26,5 +36,11 @@ public class AsposeWords {
         CtClass clazz3 = ClassPool.getDefault().getCtClass("com.aspose.words.zzXSe");
         clazz3.getDeclaredMethod("zzXRF").setBody("{zzYPQ = 29273535023874148L;}");
         clazz3.writeFile(path);
+
+        Files.updateJar(path, jar, crackedJar, Set.of(
+                "META-INF/7DD91000.SF",
+                "META-INF/7DD91000.RSA"
+        ));
+        Files.deleteFile(path, Set.of(jar + ".bak", crackedJar));
     }
 }

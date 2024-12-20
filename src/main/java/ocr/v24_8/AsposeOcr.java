@@ -3,8 +3,6 @@ package ocr.v24_8;
 import javassist.ClassPool;
 import javassist.CtClass;
 
-import java.io.InputStream;
-
 /**
  * ocr.v24_8.AsposeOcr
  * <p>

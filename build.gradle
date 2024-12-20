@@ -9,9 +9,16 @@ defaultTasks "clean"
 dependencies {
   compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
 
+  implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
   implementation group: 'org.javassist', name: 'javassist', version: '3.30.2-GA'
-  implementation group: 'com.aspose', name: 'aspose-words', version: '24.9', classifier: 'jdk17'
-  implementation group: 'com.aspose', name: 'aspose-ocr', version: '24.8.0'
+
+  implementation files('./file/word/v24_9/aspose-words-24.9-jdk17-cracked.jar')
+//  implementation group: 'com.aspose', name: 'aspose-words', version: '22.12', classifier: 'jdk17-cracked'
+  implementation group: 'com.aspose', name: 'aspose-pdf', version: '24.10', classifier: 'jdk17-cracked'
+
+  implementation (group: 'com.aspose', name: 'aspose-ocr', version: '24.8.0') {
+    exclude group: 'com.aspose', module: 'aspose-pdf'
+  }
 
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.34'
 }
